@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Utilities">
+      <UniqueIdentifier>{7b6d1e16-17f9-4058-b75d-9e83541ec342}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\WindowSystem">
+      <UniqueIdentifier>{6d630023-d2e1-4081-93f5-51ac0559ab7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS">
+      <UniqueIdentifier>{7a7766cf-fe9b-4663-946f-8e9f23c9a11b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\EventSystem">
+      <UniqueIdentifier>{cea34dde-00ee-4b4e-9322-c7086b0346f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GUI">
+      <UniqueIdentifier>{90d81298-7176-4658-9b06-0082506a824d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\MapSystem">
+      <UniqueIdentifier>{b5d508f4-9dd3-4dfd-a256-c87c499d02a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Observer">
+      <UniqueIdentifier>{152f5f8a-92bd-4614-9267-7d5a5cf8b719}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Resources">
+      <UniqueIdentifier>{e3e96294-54f3-4ced-8da8-3f88cea56322}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\SoundSystem">
+      <UniqueIdentifier>{79462569-e1ac-4a57-b993-3496738db364}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\SpriteSystem">
+      <UniqueIdentifier>{79727670-af95-4891-95ed-6047c7cf1f25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\StateSystem">
+      <UniqueIdentifier>{f2161aa3-a660-45d3-ac65-f175a47cdfc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ThreadWorkers">
+      <UniqueIdentifier>{fd2bb202-42e8-4002-8bdb-c50ab0cfe193}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Types">
+      <UniqueIdentifier>{5f651e4d-2e30-4ce1-8424-7da2f591fbc8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Utilities.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
