@@ -9,17 +9,17 @@
 
 class BaseState;
 class StateDependent;
-class State_Loading;
+class load;
 
 // State container.
 using StateContainer = std::vector<std::pair<StateType, std::unique_ptr<BaseState>>>;
 // Type container.
 using TypeContainer = std::vector<StateType>;
 // State factory.
-using StateFactory = std::unordered_map<StateType, std::function<BaseState*(void)>>;
+using StateFactory = std::unordered_map<StateType, std::function<BaseState* (void)>>;
 using StateDependents = std::vector< StateDependent* >;
 
-class StateManager{
+class StateManager {
 public:
 	StateManager(SharedContext* l_shared);
 	~StateManager();
@@ -47,11 +47,12 @@ public:
 
 	template<class T>
 	void RegisterState(const StateType& l_type) {
-		m_stateFactory[l_type] = [this]() -> BaseState* { return new T(this); };
+		m_stateFactory[l_type] = [this]() -> BaseState * { return new T(this); };
 	}
 
 	void AddDependent(StateDependent* l_dependent);
 	void RemoveDependent(StateDependent* l_dependent);
+
 private:
 	// Methods.
 	void SetGlobalState(const StateType& l_type);
@@ -60,7 +61,7 @@ private:
 
 	// Members.
 	SharedContext* m_shared;
-	State_Loading* m_loading;
+	load* m_loading;
 	StateContainer m_states;
 	StateDependents m_dependents;
 	TypeContainer m_toRemove;

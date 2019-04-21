@@ -7,7 +7,7 @@ GUI_Label::~GUI_Label() {}
 
 void GUI_Label::ReadIn(std::stringstream& l_stream) {
 	std::string content;
-	Utils::ReadQuotedString(l_stream, content);
+	Utilibros::ReadQuotedString(l_stream, content);
 	m_visual.m_text.setString(content);
 }
 

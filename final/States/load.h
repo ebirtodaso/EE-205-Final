@@ -5,10 +5,10 @@
 
 using LoaderContainer = std::vector<FileLoader*>;
 
-class State_Loading : public BaseState {
+class load : public BaseState {
 public:
-	State_Loading(StateManager* l_stateManager);
-	~State_Loading();
+	load(StateManager* l_stateManager);
+	~load();
 
 	void OnCreate();
 	void OnDestroy();

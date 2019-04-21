@@ -49,9 +49,9 @@ void Renderer::Draw(const sf::Drawable& l_drawable, sf::RenderTarget* l_target) 
 
 void Renderer::LoadShaders() {
 	if (!m_useShaders) { return; }
-	auto directory = Utils::GetWorkingDirectory() + "media/Shaders/";
-	auto v_shaders = Utils::GetFileList(directory, "*.vert", false);
-	auto f_shaders = Utils::GetFileList(directory, "*.frag", false);
+	auto directory = Utilibros::GetWorkingDirectory() + "media/Shaders/";
+	auto v_shaders = Utilibros::GetFileList(directory, "*.vert", false);
+	auto f_shaders = Utilibros::GetFileList(directory, "*.frag", false);
 
 	for (auto& shader : v_shaders) {
 		auto& file = shader.first;

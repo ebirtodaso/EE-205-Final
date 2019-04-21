@@ -31,7 +31,7 @@ int EntityManager::AddEntity(const std::string& l_entityFile) {
 	int e_id = -1;
 
 	std::ifstream file;
-	file.open(Utils::GetWorkingDirectory() + "media/Entities/" + l_entityFile + ".entity");
+	file.open(Utilibros::GetWorkingDirectory() + "media/Entities/" + l_entityFile + ".entity");
 	if (!file.is_open()) {
 		std::cout << "! Failed to load entity: " << l_entityFile << std::endl;
 		return -1;

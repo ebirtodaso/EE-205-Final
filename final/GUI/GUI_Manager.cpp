@@ -248,7 +248,7 @@ bool GUI_Manager::LoadInterface(const StateType& l_state,
 	const std::string& l_interface, const std::string& l_name)
 {
 	std::ifstream file;
-	file.open(Utils::GetWorkingDirectory() + "media/GUI_Interfaces/" + l_interface);
+	file.open(Utilibros::GetWorkingDirectory() + "media/GUI_Interfaces/" + l_interface);
 	std::string InterfaceName;
 
 	if (!file.is_open()) {
@@ -314,7 +314,7 @@ bool GUI_Manager::LoadInterface(const std::string& l_interface, const std::strin
 
 bool GUI_Manager::LoadInterface(GUI_Interface* l_interface, const std::string& l_fileName) {
 	std::ifstream file;
-	file.open(Utils::GetWorkingDirectory() + "media/GUI_Interfaces/" + l_fileName);
+	file.open(Utilibros::GetWorkingDirectory() + "media/GUI_Interfaces/" + l_fileName);
 	std::string InterfaceName;
 
 	if (!file.is_open()) {
@@ -370,7 +370,7 @@ bool GUI_Manager::LoadInterface(GUI_Interface* l_interface, const std::string& l
 
 bool GUI_Manager::LoadStyle(const std::string& l_file, GUI_Element* l_element) {
 	std::ifstream file;
-	file.open(Utils::GetWorkingDirectory() + "media/GUI_Styles/" + l_file);
+	file.open(Utilibros::GetWorkingDirectory() + "media/GUI_Styles/" + l_file);
 
 	std::string currentState;
 	GUI_Style ParentStyle;

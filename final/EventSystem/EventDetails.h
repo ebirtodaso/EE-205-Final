@@ -5,13 +5,13 @@
 #include "../GUI/GUI_Event.h"
 
 struct EventDetails {
-	EventDetails(const std::string& l_bindName): m_name(l_bindName),
+	EventDetails(const std::string& l_bindName) : m_name(l_bindName),
 		m_hasBeenProcessed(false), m_controlPressed(false), m_altPressed(false),
 		m_shiftPressed(false), m_systemPressed(false)
 	{
 		Clear();
 	}
-	
+
 	std::string m_name;
 	sf::Vector2i m_size;
 	sf::Uint32 m_textEntered;

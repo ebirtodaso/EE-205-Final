@@ -25,7 +25,7 @@ GUI_FileManager::GUI_FileManager(std::string l_name, GUI_Manager* l_guiMgr, Stat
 	e->AddCallback<GUI_FileManager>("FileManager_ActionButton", &GUI_FileManager::ActionButton, this);
 	e->AddCallback<GUI_FileManager>("FileManager_Close", &GUI_FileManager::CloseButton, this);
 
-	SetDirectory(Utils::GetWorkingDirectory());
+	SetDirectory(Utilibros::GetWorkingDirectory());
 }
 
 GUI_FileManager::~GUI_FileManager() {
@@ -64,8 +64,8 @@ void GUI_FileManager::SetDirectory(std::string l_dir) {
 
 void GUI_FileManager::ListFiles() {
 	m_interface->GetElement("Directory")->SetText(m_dir);
-	auto list = Utils::GetFileList(m_dir, "*.*", true);
-	Utils::SortFileList(list);
+	auto list = Utilibros::GetFileList(m_dir, "*.*", true);
+	Utilibros::SortFileList(list);
 	auto ParentDir = m_interface->GetElement("ParentDir");
 	float x = ParentDir->GetPosition().x;
 	float y = ParentDir->GetPosition().y + ParentDir->GetSize().y + 1.f;

@@ -6,7 +6,7 @@
 #include "../../WindowSystem/Window.h"
 #include "../../Types/Event_Queue.h"
 #include "../../Observer/MessageHandler.h"
-#include "../../Debug/DebugOverlay.h"
+//#include "../../Debug/DebugOverlay.h"
 
 using SystemContainer = std::unordered_map<System, std::unique_ptr<S_Base>>;
 using EntityEventContainer = std::unordered_map<EntityId,EventQueue>;

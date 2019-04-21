@@ -116,7 +116,7 @@ bool SoundManager::PlayMusic(const std::string& l_musicId, float l_volume, bool 
 		++m_numSounds;
 	}
 
-	if (!music->openFromFile(Utils::GetWorkingDirectory() + path)) {
+	if (!music->openFromFile(Utilibros::GetWorkingDirectory() + path)) {
 		music.release();
 		--m_numSounds;
 		std::cerr << "[SoundManager] Failed to load music from file: " << l_musicId << std::endl;
@@ -184,7 +184,7 @@ SoundProps* SoundManager::GetSoundProperties(const std::string& l_soundName) {
 
 bool SoundManager::LoadProperties(const std::string& l_name) {
 	std::ifstream file;
-	file.open(Utils::GetWorkingDirectory() + "media/Sounds/" + l_name + ".sound");
+	file.open(Utilibros::GetWorkingDirectory() + "media/Sounds/" + l_name + ".sound");
 	if (!file.is_open()) {
 		std::cerr << "Failed to load sound: " << l_name << std::endl;
 		return false;

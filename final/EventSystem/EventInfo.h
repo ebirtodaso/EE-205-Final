@@ -3,6 +3,7 @@
 #include "../GUI/GUI_Event.h"
 
 struct EventInfo {
+public:
 	EventInfo() : m_type(EventInfoType::Normal), m_code(0) {}
 	EventInfo(int l_eventCode) : m_type(EventInfoType::Normal), m_code(l_eventCode) {}
 	EventInfo(const GUI_Event& l_guiEvent) : m_type(EventInfoType::GUI), m_gui(l_guiEvent) {}
@@ -26,8 +27,9 @@ struct EventInfo {
 		int m_code;
 		GUI_Event m_gui;
 	};
-	
+
 	EventInfoType m_type;
+
 private:
 	void Move(const EventInfo& l_rhs) {
 		if (m_type == EventInfoType::GUI) { DestroyGUIStrings(); }

@@ -51,6 +51,7 @@ public:
 
 	static const int Max_Sounds = 150;
 	static const int Sound_Cache = 75;
+
 private:
 	bool LoadProperties(const std::string& l_file);
 	void PauseAll(const StateType& l_state);

@@ -3,7 +3,7 @@
 #include "../ECS/Core/Entity_Manager.h"
 #include "../ECS/Components/C_Position.h"
 #include "../WindowSystem/Window.h"
-#include "../StateSystem/States/State_Loading.h"
+#include "../States/load.h"
 
 Map::Map(Window* l_window, EntityManager* l_entityManager, TextureManager* l_textureManager)
 	: m_window(l_window), m_textureManager(l_textureManager), m_defaultTile(nullptr),
@@ -30,10 +30,10 @@ TileSet* Map::GetTileSet() { return &m_tileSet; }
 
 TileMap* Map::GetTileMap() { return &m_tileMap; }
 
-unsigned int Map::GetTileSize()const{ return Sheet::Tile_Size; }
-sf::Vector2u Map::GetMapSize()const{ return m_tileMap.GetMapSize(); }
-sf::Vector2f Map::GetPlayerStart()const{ return m_playerStart; }
-int Map::GetPlayerId()const{ return m_playerId; }
+unsigned int Map::GetTileSize()const { return Sheet::Tile_Size; }
+sf::Vector2u Map::GetMapSize()const { return m_tileMap.GetMapSize(); }
+sf::Vector2f Map::GetPlayerStart()const { return m_playerStart; }
+int Map::GetPlayerId()const { return m_playerId; }
 
 void Map::SaveToFile(const std::string& l_file) {
 	std::ofstream file(l_file, std::ios::out);
@@ -94,14 +94,14 @@ void Map::ClearMapTexture(sf::Vector3i l_from, sf::Vector3i l_to) {
 	// Portion of the map needs clearing.
 	auto position = sf::Vector2i(l_from.x, l_from.y) * static_cast<int>(Sheet::Tile_Size);
 	auto size = sf::Vector2i(
-			((l_to.x < 0 ? mapSize.x - 1 : l_to.x) - l_from.x) + 1,
-			((l_to.y < 0 ? mapSize.y - 1 : l_to.y) - l_from.y) + 1)
+		((l_to.x < 0 ? mapSize.x - 1 : l_to.x) - l_from.x) + 1,
+		((l_to.y < 0 ? mapSize.y - 1 : l_to.y) - l_from.y) + 1)
 		* static_cast<int>(Sheet::Tile_Size);
 
 	sf::RectangleShape shape;
 	shape.setPosition(sf::Vector2f(position));
 	shape.setSize(sf::Vector2f(size));
-	shape.setFillColor(sf::Color(0,0,0,-255));
+	shape.setFillColor(sf::Color(0, 0, 0, -255));
 	for (auto layer = l_from.z; layer <= toLayer; ++layer) {
 		m_textures[layer].draw(shape, sf::BlendMultiply);
 		m_textures[layer].display();
@@ -111,35 +111,40 @@ void Map::ClearMapTexture(sf::Vector3i l_from, sf::Vector3i l_to) {
 bool Map::ProcessLine(std::stringstream& l_stream) {
 	std::string type;
 	if (!(l_stream >> type)) { return false; }
-	if(type == "TILE") {
+	if (type == "TILE") {
 		m_tileMap.ReadInTile(l_stream);
-	} else if(type == "SIZE") {
+	}
+	else if (type == "SIZE") {
 		sf::Vector2u mapSize;
 		l_stream >> mapSize.x >> mapSize.y;
 		m_tileMap.SetMapSize(mapSize);
-	} else if(type == "DEFAULT_FRICTION") {
+	}
+	else if (type == "DEFAULT_FRICTION") {
 		l_stream >> m_defaultTile.m_friction.x >> m_defaultTile.m_friction.y;
-	} else if(type == "ENTITY") {
+	}
+	else if (type == "ENTITY") {
 		// Set up entity here.
 		std::string name;
 		l_stream >> name;
 		if (name == "Player" && m_playerId != -1) { return true; }
 		int entityId = m_entityManager->AddEntity(name);
 		if (entityId < 0) { return true; }
-		if(name == "Player") { m_playerId = entityId; }
-		auto position = m_entityManager->GetComponent<C_Position>(entityId,Component::Position);
-		if(position) { l_stream >> *position; }
-	} else if (type == "SHEET") {
+		if (name == "Player") { m_playerId = entityId; }
+		auto position = m_entityManager->GetComponent<C_Position>(entityId, Component::Position);
+		if (position) { l_stream >> *position; }
+	}
+	else if (type == "SHEET") {
 		std::string sheetName;
 		l_stream >> sheetName;
 		m_tileSet.ResetWorker();
-		m_tileSet.AddFile(Utils::GetWorkingDirectory() + "media/Tilesheets/" + sheetName);
+		m_tileSet.AddFile(Utilibros::GetWorkingDirectory() + "media/Tilesheets/" + sheetName);
 		m_tileSet.SetName(sheetName);
-		auto loading = m_stateManager->GetState<State_Loading>(StateType::Loading);
+		auto loading = m_stateManager->GetState<load>(StateType::Load);
 		loading->AddLoader(&m_tileSet);
 
 		while (!m_tileSet.IsDone()) { std::cout << "Waiting for tile set to load..." << std::endl; sf::sleep(sf::seconds(0.5f)); }
-	} else {
+	}
+	else {
 		// Something else.
 		std::cout << "! Passing type \"" << type << "\" to map loadees." << std::endl;
 		for (auto& loadee : m_loadees) { loadee->ReadMapLine(type, l_stream); }
@@ -151,7 +156,7 @@ void Map::AddLoadee(MapLoadee* l_loadee) { m_loadees.emplace_back(l_loadee); }
 
 void Map::RemoveLoadee(MapLoadee* l_loadee) {
 	m_loadees.erase(std::find_if(m_loadees.begin(), m_loadees.end(),
-		[l_loadee](MapLoadee* l_arg) { return l_arg == l_loadee; }
+		[l_loadee](MapLoadee * l_arg) { return l_arg == l_loadee; }
 	));
 }
 
@@ -159,7 +164,7 @@ void Map::Update(float l_dT) {
 	m_gameTime += l_dT;
 	if (m_gameTime > m_dayLength * 2) { m_gameTime = 0.f; }
 	float timeNormal = m_gameTime / m_dayLength;
-	if(timeNormal > 1.f){ timeNormal = 2.f - timeNormal; }
+	if (timeNormal > 1.f) { timeNormal = 2.f - timeNormal; }
 	auto shader = m_window->GetRenderer()->GetShader("default");
 	if (!shader) { return; }
 	shader->setUniform("timeNormal", timeNormal);

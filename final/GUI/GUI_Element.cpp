@@ -82,7 +82,7 @@ void GUI_Element::ApplyTextStyle() {
 		m_visual.m_text.setFillColor(CurrentStyle.m_textColor);
 		m_visual.m_text.setCharacterSize(CurrentStyle.m_textSize);
 		if (CurrentStyle.m_textCenterOrigin) {
-			Utils::CenterSFMLText(m_visual.m_text);
+			Utilibros::CenterSFMLText(m_visual.m_text);
 		} else {
 			m_visual.m_text.setOrigin(0.f, 0.f);
 		}

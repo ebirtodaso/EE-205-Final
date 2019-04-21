@@ -12,6 +12,7 @@ public:
 	virtual void RemoveState(const StateType& l_state) = 0;
 
 	StateType GetCurrentState()const { return m_currentState; }
+
 protected:
 	void SetState(const StateType& l_state) { m_currentState = l_state; }
 	StateType m_currentState;

@@ -1,15 +1,15 @@
-#include "State_Loading.h"
-#include "../StateManager.h"
-#include "../../WindowSystem/Window.h"
-#include "../../Resources/FontManager.h"
-#include "../../Utilities/Helpers.h"
+#include "load.h"
+#include "../StateSystem/StateManager.h"
+#include "../WindowSystem/Window.h"
+#include "../Resources/FontManager.h"
+#include "../Utilities/Helpers.h"
 
-State_Loading::State_Loading(StateManager* l_stateManager)
+load::load(StateManager* l_stateManager)
 	: BaseState(l_stateManager), m_originalWork(0), m_percentage(0), m_manualContinue(true) {}
 
-State_Loading::~State_Loading() {}
+load::~load() {}
 
-void State_Loading::OnCreate() {
+void load::OnCreate() {
 	auto context = m_stateMgr->GetContext();
 	context->m_fontManager->RequireResource("Main");
 	m_text.setFont(*context->m_fontManager->GetResource("Main"));
@@ -24,17 +24,17 @@ void State_Loading::OnCreate() {
 	m_rect.setPosition(0.f, windowSize.y / 2.f);
 
 	EventManager* evMgr = m_stateMgr->GetContext()->m_eventManager;
-	evMgr->AddCallback(StateType::Loading, "Key_Space", &State_Loading::Proceed, this);
+	evMgr->AddCallback(StateType::Load, "Key_Space", &load::Proceed, this);
 }
 
-void State_Loading::OnDestroy() {
+void load::OnDestroy() {
 	auto context = m_stateMgr->GetContext();
 	EventManager* evMgr = context->m_eventManager;
-	evMgr->RemoveCallback(StateType::Loading, "Key_Space");
+	evMgr->RemoveCallback(StateType::Load, "Key_Space");
 	context->m_fontManager->ReleaseResource("Main");
 }
 
-void State_Loading::Update(const sf::Time& l_time) {
+void load::Update(const sf::Time& l_time) {
 	if (m_loaders.empty()) { if (!m_manualContinue) { Proceed(nullptr); } return; }
 	auto windowSize = m_stateMgr->GetContext()->m_wind->GetRenderWindow()->getSize();
 	if (m_loaders.back()->IsDone()) {
@@ -53,20 +53,20 @@ void State_Loading::Update(const sf::Time& l_time) {
 	m_rect.setSize(sf::Vector2f((windowSize.x / 100) * percentage, 16.f));
 }
 
-void State_Loading::Draw() {
+void load::Draw() {
 	sf::RenderWindow* wind = m_stateMgr->GetContext()->m_wind->GetRenderWindow();
 	wind->draw(m_rect);
 	wind->draw(m_text);
 }
 
-void State_Loading::UpdateText(const std::string& l_text, float l_percentage) {
+void load::UpdateText(const std::string& l_text, float l_percentage) {
 	m_text.setString(std::to_string(static_cast<int>(l_percentage)) + "%" + l_text);
 	auto windowSize = m_stateMgr->GetContext()->m_wind->GetRenderWindow()->getSize();
 	m_text.setPosition(windowSize.x / 2.f, windowSize.y / 2.f);
-	Utils::CenterSFMLText(m_text);
+	Utilibros::CenterSFMLText(m_text);
 }
 
-float State_Loading::CalculatePercentage() {
+float load::CalculatePercentage() {
 	float absolute = 100.f;
 	if (m_loaders.empty()) { return absolute; }
 	if (m_loaders.back()->GetTotalLines()) {
@@ -78,14 +78,14 @@ float State_Loading::CalculatePercentage() {
 	return absolute;
 }
 
-void State_Loading::SetManualContinue(bool l_continue) { m_manualContinue = l_continue; }
+void load::SetManualContinue(bool l_continue) { m_manualContinue = l_continue; }
 
-void State_Loading::Proceed(EventDetails* l_details) {
+void load::Proceed(EventDetails* l_details) {
 	if (!m_loaders.empty()) { return; }
 	m_stateMgr->SwitchTo(m_stateMgr->GetNextToLast());
 }
 
-void State_Loading::AddLoader(FileLoader* l_loader) { m_loaders.emplace_back(l_loader); l_loader->OnAdd(); }
-bool State_Loading::HasWork() const { return !m_loaders.empty(); }
-void State_Loading::Activate() { m_originalWork = m_loaders.size(); }
-void State_Loading::Deactivate() {}
+void load::AddLoader(FileLoader* l_loader) { m_loaders.emplace_back(l_loader); l_loader->OnAdd(); }
+bool load::HasWork() const { return !m_loaders.empty(); }
+void load::Activate() { m_originalWork = m_loaders.size(); }
+void load::Deactivate() {}

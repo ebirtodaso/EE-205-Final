@@ -164,7 +164,7 @@ void EventManager::LoadBindings() {
 	std::string delimiter = ":";
 
 	std::ifstream bindings;
-	bindings.open(Utils::GetWorkingDirectory() + "keys.cfg");
+	bindings.open(Utilibros::GetWorkingDirectory() + "keys.cfg");
 	if (!bindings.is_open()) { std::cout << "! Failed loading keys.cfg." << std::endl; return; }
 	std::string line;
 	while(std::getline(bindings,line)) {

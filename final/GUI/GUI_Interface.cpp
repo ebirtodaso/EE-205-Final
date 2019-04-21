@@ -92,7 +92,7 @@ void GUI_Interface::ReadIn(std::stringstream& l_stream) {
 	std::string title;
 	l_stream >> m_elementPadding.x >> m_elementPadding.y 
 		>> movableState >> titleShow;
-	Utils::ReadQuotedString(l_stream, title);
+	Utilibros::ReadQuotedString(l_stream, title);
 	m_visual.m_text.setString(title);
 	if (movableState == "Movable") { m_movable = true; }
 	if (titleShow == "Title") { m_showTitleBar = true; }
