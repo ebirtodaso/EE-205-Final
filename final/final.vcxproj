@@ -129,6 +129,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="RandomNumberGen.h" />
+    <ClInclude Include="Helpers.h" />
     <ClInclude Include="Utilities.h" />
   </ItemGroup>
   <ItemGroup>
