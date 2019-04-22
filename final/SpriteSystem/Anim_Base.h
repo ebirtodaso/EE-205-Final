@@ -3,8 +3,10 @@
 using Frame = unsigned int;
 
 class SpriteSheet;
-class Anim_Base{
+class Anim_Base {
+
 	friend class SpriteSheet;
+
 public:
 	Anim_Base();
 	virtual ~Anim_Base();
@@ -49,6 +51,7 @@ public:
 		a.ReadIn(l_stream);
 		return l_stream;
 	}
+
 protected:
 	virtual void FrameStep() = 0;
 	virtual void CropSprite() = 0;

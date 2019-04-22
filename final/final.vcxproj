@@ -152,7 +152,7 @@
     <ClCompile Include="GUI\GUI_Manager.cpp" />
     <ClCompile Include="GUI\Specialized\FileManager.cpp" />
     <ClCompile Include="GUI\Specialized\VerticalDropDown.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="run.cpp" />
     <ClCompile Include="MapSystem\Map.cpp" />
     <ClCompile Include="MapSystem\TileMap.cpp" />
     <ClCompile Include="MapSystem\TileSet.cpp" />
