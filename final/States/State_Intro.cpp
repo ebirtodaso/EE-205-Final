@@ -1,8 +1,10 @@
 #include "State_Intro.h"
 #include "../StateSystem/StateManager.h"
 #include "../WindowSystem/Window.h"
+#include "../ParticleSystem/ParticleSystem.h"
 #include "../Resources/TextureManager.h"
 #include "load.h"
+#include "../SoundSystem/SoundManager.h"
 
 State_Intro::State_Intro(StateManager* l_stateManager)
 	: BaseState(l_stateManager) {}
@@ -29,9 +31,17 @@ void State_Intro::OnCreate() {
 
 	EventManager * evMgr = context->m_eventManager;
 	evMgr->AddCallback("Intro_Continue", &State_Intro::Continue, this);
-	//m_stateMgr->GetContext()->m_soundManager->PlayMusic("Electrix", 100.f, true);
+	LoadFiles();
+	//context->m_soundManager->PlayMusic("Electrix", 100.f, true);
+}
 
+void State_Intro::LoadFiles() {
+	auto context = m_stateMgr->GetContext();
+	std::string dir = "media/Particles/";
+	auto fileList = Utilibros::GetFileList(Utilibros::GetWorkingDirectory() + dir, "*.particle");
+	for (auto& file : fileList) { context->m_particles->AddFile(Utilibros::GetWorkingDirectory() + (dir + file.first)); }
 	auto loading = m_stateMgr->GetState<load>(StateType::Load);
+	loading->AddLoader(context->m_particles);
 	loading->SetManualContinue(false);
 }
 

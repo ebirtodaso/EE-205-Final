@@ -24,6 +24,10 @@ public:
 	void MainMenu(EventDetails* l_details);
 	void PlayerMove(EventDetails* l_details);
 
+	// Debug:
+	void ApplyForce(EventDetails* l_details);
+	void Explosion(EventDetails* l_details);
+
 private:
 	void UpdateCamera();
 	int m_player;

@@ -167,14 +167,14 @@ bool SoundManager::SetPosition(const SoundID& l_id, const sf::Vector3f& l_pos) {
 }
 
 bool SoundManager::IsPlaying(const SoundID& l_id) const {
-	auto& container = m_audio.find(m_currentState);
+	auto container = m_audio.find(m_currentState);
 	if (container == m_audio.end()) { return false; }
-	auto& sound = container->second.find(l_id);
+	auto sound = container->second.find(l_id);
 	return(sound != container->second.end() ? (sound->second.second->getStatus() != sf::SoundSource::Status::Stopped) : false);
 }
 
 SoundProps* SoundManager::GetSoundProperties(const std::string& l_soundName) {
-	auto& properties = m_properties.find(l_soundName);
+	auto properties = m_properties.find(l_soundName);
 	if (properties == m_properties.end()) {
 		if (!LoadProperties(l_soundName)) { return nullptr; }
 		properties = m_properties.find(l_soundName);

@@ -8,6 +8,7 @@
 namespace Utilibros {
 #ifdef RUNNING_WINDOWS
 #define WINDOWSMASTERRACE
+#pragma comment (lib, "Shlwapi.lib")
 #include <windows.h>
 #include <Shlwapi.h>
 	inline std::string GetWorkingDirectory() {

@@ -11,6 +11,7 @@
 #include "ECS/Core/System_Manager.h"
 #include "ECS/Core/Entity_Manager.h"
 #include "GUI/GUI_Manager.h"
+#include "ParticleSystem/ParticleSystem.h"
 
 class Game {
 public:
@@ -43,5 +44,6 @@ private:
 	SystemManager m_systemManager;
 	EntityManager m_entityManager;
 	Map m_gameMap;
+	std::unique_ptr<ParticleSystem> m_particles;
 	std::unique_ptr<StateManager> m_stateManager;
 };

@@ -105,7 +105,7 @@ Emitter* ParticleSystem::FindEmitter(const sf::Vector2f& l_point, const sf::Vect
 }
 
 GeneratorList* ParticleSystem::GetGenerators(const std::string& l_name) {
-	auto& itr = m_generators.find(l_name);
+	auto itr = m_generators.find(l_name);
 	if (itr == m_generators.end()) { return nullptr; }
 	return &itr->second;
 }
@@ -131,7 +131,7 @@ void ParticleSystem::ChangeState(const StateType& l_state) {
 	if (l_state == StateType::Game || l_state == StateType::MapEditor) { c->SetMap(m_map); } // REEST! FIX!!!
 	else { c->SetMap(nullptr); }
 	auto f = static_cast<ForceUpdater*>(m_updaters["Force"].get());
-	auto& forceItr = m_forces.find(m_currentState);
+	auto forceItr = m_forces.find(m_currentState);
 	if (forceItr == m_forces.end()) { f->SetApplicators(nullptr); return; }
 	f->SetApplicators(&forceItr->second);
 }

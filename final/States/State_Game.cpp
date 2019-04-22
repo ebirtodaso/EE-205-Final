@@ -5,10 +5,12 @@
 #include "../ECS/Core/System_Manager.h"
 #include "../ECS/Systems/S_Collision.h"
 #include "../ECS/Systems/S_Movement.h"
+#include "../ParticleSystem/ParticleSystem.h"
 #include "load.h"
 #include "../SoundSystem/SoundManager.h"
 
-State_Game::State_Game(StateManager* l_stateManager) : BaseState(l_stateManager) {}
+State_Game::State_Game(StateManager* l_stateManager)
+	: BaseState(l_stateManager) {}
 
 State_Game::~State_Game() {}
 
@@ -27,14 +29,19 @@ void State_Game::OnCreate() {
 	m_view.setCenter(static_cast<float>(size.x) / 2, static_cast<float>(size.y) / 2);
 	m_view.zoom(0.6f);
 
-	m_stateMgr->GetContext()->m_soundManager->PlayMusic("TownTheme", 50.f, true);
+	evMgr->AddCallback("Key_F", &State_Game::ApplyForce, this);
+	evMgr->AddCallback("Key_E", &State_Game::Explosion, this);
+
+	context->m_particles->CreateState(StateType::Game);
 
 	auto loading = m_stateMgr->GetState<load>(StateType::Load);
 	context->m_gameMap->AddFile(Utilibros::GetWorkingDirectory() + "media/Maps/map1.map");
 	loading->AddLoader(context->m_gameMap);
 	loading->SetManualContinue(true);
+
 	context->m_soundManager->PlayMusic("TownTheme", 50.f, true);
 }
+
 void State_Game::OnDestroy() {
 	auto context = m_stateMgr->GetContext();
 	EventManager* evMgr = context->m_eventManager;
@@ -48,11 +55,12 @@ void State_Game::OnDestroy() {
 	context->m_gameMap->GetTileSet()->Purge();
 }
 
-void State_Game::Update(const sf::Time& l_time) {
+void State_Game::Update(const sf::Time & l_time) {
 	auto context = m_stateMgr->GetContext();
 	UpdateCamera();
 	context->m_gameMap->Update(l_time.asSeconds());
 	context->m_systemManager->Update(l_time.asSeconds());
+	context->m_particles->Update(l_time.asSeconds());
 }
 
 void State_Game::UpdateCamera() {
@@ -66,7 +74,7 @@ void State_Game::UpdateCamera() {
 	sf::FloatRect viewSpace = context->m_wind->GetViewSpace();
 	if (viewSpace.left <= 0) {
 		m_view.setCenter(viewSpace.width / 2, m_view.getCenter().y);
-		context->m_wind->GetRenderWindow()->setView(m_view);
+		context->m_wind->GetRenderWindow()->setView(m_view); // all of these should now be removed!
 	}
 	else if (viewSpace.left + viewSpace.width > (context->m_gameMap->GetMapSize().x) * Sheet::Tile_Size) {
 		m_view.setCenter(((context->m_gameMap->GetMapSize().x) * Sheet::Tile_Size) - (viewSpace.width / 2), m_view.getCenter().y);
@@ -88,10 +96,14 @@ void State_Game::Draw() {
 	for (unsigned int i = 0; i < Sheet::Num_Layers; ++i) {
 		context->m_gameMap->Draw(i);
 		m_stateMgr->GetContext()->m_systemManager->Draw(m_stateMgr->GetContext()->m_wind, i);
+		context->m_particles->Draw(m_stateMgr->GetContext()->m_wind, i);
 	}
+	context->m_particles->Draw(m_stateMgr->GetContext()->m_wind, -1);
 }
 
-void State_Game::MainMenu(EventDetails* l_details) { m_stateMgr->SwitchTo(StateType::MainMenu); }
+void State_Game::MainMenu(EventDetails * l_details) {
+	m_stateMgr->SwitchTo(StateType::MainMenu);
+}
 
 void State_Game::Activate() {
 	auto map = m_stateMgr->GetContext()->m_gameMap;
@@ -102,7 +114,7 @@ void State_Game::Activate() {
 
 void State_Game::Deactivate() {}
 
-void State_Game::PlayerMove(EventDetails* l_details) {
+void State_Game::PlayerMove(EventDetails * l_details) {
 	Message msg((MessageType)EntityMessage::Move);
 	if (l_details->m_name == "Player_MoveLeft") {
 		msg.m_int = static_cast<int>(Direction::Left);
@@ -116,4 +128,22 @@ void State_Game::PlayerMove(EventDetails* l_details) {
 	else if (l_details->m_name == "Player_MoveDown") { msg.m_int = static_cast<int>(Direction::Down); }
 	msg.m_receiver = m_player;
 	m_stateMgr->GetContext()->m_systemManager->GetMessageHandler()->Dispatch(msg);
+}
+
+void State_Game::ApplyForce(EventDetails * l_details) {
+	auto context = m_stateMgr->GetContext();
+	auto pos = m_stateMgr->GetContext()->m_entityManager->GetComponent<C_Position>(m_player, Component::Position);
+	context->m_particles->ApplyForce(
+		sf::Vector3f(pos->GetPosition().x, pos->GetPosition().y, static_cast<float>(pos->GetElevation() * Sheet::Tile_Size)),
+		sf::Vector3f(0.3f, 0.3f, 0.3f),
+		100.f);
+}
+
+void State_Game::Explosion(EventDetails * l_details) {
+	auto context = m_stateMgr->GetContext();
+	auto pos = m_stateMgr->GetContext()->m_entityManager->GetComponent<C_Position>(m_player, Component::Position);
+	context->m_particles->ApplyForce(
+		sf::Vector3f(pos->GetPosition().x, pos->GetPosition().y, static_cast<float>(pos->GetElevation() * Sheet::Tile_Size)),
+		sf::Vector3f(-500.f, -500.f, -500.f),
+		100.f);
 }

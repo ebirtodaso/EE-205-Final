@@ -76,9 +76,12 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>E:\EE 205\final\external\SFML\include\SFML;E:\EE 205\final\external\Windows SDK;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.17763.0\um</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>E:\EE 205\final\external\SFML\lib;E:\EE 205\final\final;$(UM_IncludePath);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -91,7 +94,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>E:\EE 205\final\external\SFML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>E:\EE 205\final\external\SFML\lib;E:\EE 205\final\final;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics-d.lib;sfml-windows-d.lib;sfml-audio-d.lib;sfml-system-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -103,11 +106,14 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>E:\EE 205\final\external\SFML\include\SFML;E:\EE 205\final\external\Windows SDK;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.17763.0\um</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>E:\EE 205\final\external\SFML\lib;E:\EE 205\final\final;$(UM_IncludePath);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -124,7 +130,7 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>E:\EE 205\final\external\SFML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>E:\EE 205\final\external\SFML\lib;E:\EE 205\final\final;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics.lib;sfml-windows.lib;sfml-audio.lib;sfml-system.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -172,6 +178,7 @@
     <ClCompile Include="WindowSystem\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\Shlwapi.h" />
     <ClInclude Include="ECS\Components\C_Collidable.h" />
     <ClInclude Include="ECS\Components\C_Controller.h" />
     <ClInclude Include="ECS\Components\C_Drawable.h" />
@@ -238,6 +245,7 @@
     <ClInclude Include="ParticleSystem\Updaters\Interpolator.h" />
     <ClInclude Include="ParticleSystem\Updaters\Lifespan.h" />
     <ClInclude Include="ParticleSystem\Updaters\Spatial.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="SharedContext.h" />
     <ClInclude Include="MapSystem\Map.h" />
     <ClInclude Include="MapSystem\MapDefinitions.h" />
@@ -277,6 +285,9 @@
     <ClInclude Include="Utilities\Utilities.h" />
     <ClInclude Include="WindowSystem\Renderer.h" />
     <ClInclude Include="WindowSystem\Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="final.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

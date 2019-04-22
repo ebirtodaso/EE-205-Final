@@ -18,12 +18,10 @@
 #include "ECS/Systems/S_SheetAnimation.h"
 #include "ECS/Systems/S_Sound.h"
 
-Game::Game()
-	: m_window("Chapter 2", sf::Vector2u(800, 600), false),
-	m_entityManager(&m_systemManager, &m_textureManager),
-	m_guiManager(m_window.GetEventManager(), &m_context),
-	m_soundManager(&m_audioManager),
-	m_gameMap(&m_window, &m_entityManager, &m_textureManager)
+Game::Game() : m_window("Chapter 3", sf::Vector2u(800, 600), false),
+m_entityManager(&m_systemManager, &m_textureManager),
+m_guiManager(m_window.GetEventManager(), &m_context),
+m_soundManager(&m_audioManager), m_gameMap(&m_window, &m_entityManager, &m_textureManager)
 {
 	SetUpClasses();
 	SetUpECS();
@@ -33,9 +31,11 @@ Game::Game()
 	m_stateManager->SwitchTo(StateType::Intro);
 }
 
-Game::~Game() { m_fontManager.ReleaseResource("Main"); }
+Game::~Game() {
+	m_fontManager.ReleaseResource("Main");
+}
 
-sf::Time Game::GetElapsed() { return m_clock.getElapsedTime();  }
+sf::Time Game::GetElapsed() { return m_clock.getElapsedTime(); }
 void Game::RestartClock() { m_elapsed = m_clock.restart(); }
 Window* Game::GetWindow() { return &m_window; }
 
@@ -53,6 +53,7 @@ void Game::Update() {
 
 void Game::Render() {
 	m_window.BeginDraw();
+	// Render here.
 	m_stateManager->Draw();
 	m_guiManager.Render(m_window.GetRenderWindow());
 	m_window.EndDraw();
@@ -82,47 +83,40 @@ void Game::SetUpClasses() {
 
 	m_stateManager = std::make_unique<StateManager>(&m_context);
 	m_gameMap.SetStateManager(m_stateManager.get());
+	m_particles = std::make_unique<ParticleSystem>(m_stateManager.get(), &m_textureManager, &m_rand, &m_gameMap);
+	m_context.m_particles = m_particles.get();
+	m_gameMap.AddLoadee(m_particles.get());
 }
 
 void Game::SetUpECS() {
-	m_entityManager.AddComponentType<C_Position>(
-		Component::Position);
-	m_entityManager.AddComponentType<C_SpriteSheet>(
-		Component::SpriteSheet);
+	m_entityManager.AddComponentType<C_Position>(Component::Position);
+	m_entityManager.AddComponentType<C_SpriteSheet>(Component::SpriteSheet);
 	m_entityManager.AddComponentType<C_State>(Component::State);
 	m_entityManager.AddComponentType<C_Movable>(Component::Movable);
-	m_entityManager.AddComponentType<C_Controller>(
-		Component::Controller);
-	m_entityManager.AddComponentType<C_Collidable>(
-		Component::Collidable);
-	m_entityManager.AddComponentType<C_SoundEmitter>(
-		Component::SoundEmitter);
-	m_entityManager.AddComponentType<C_SoundListener>(
-		Component::SoundListener);
+	m_entityManager.AddComponentType<C_Controller>(Component::Controller);
+	m_entityManager.AddComponentType<C_Collidable>(Component::Collidable);
+	m_entityManager.AddComponentType<C_SoundEmitter>(Component::SoundEmitter);
+	m_entityManager.AddComponentType<C_SoundListener>(Component::SoundListener);
 
 	m_systemManager.AddSystem<S_State>(System::State);
 	m_systemManager.AddSystem<S_Control>(System::Control);
 	m_systemManager.AddSystem<S_Movement>(System::Movement);
 	m_systemManager.AddSystem<S_Collision>(System::Collision);
-	m_systemManager.AddSystem<S_SheetAnimation>(
-		System::SheetAnimation);
+	m_systemManager.AddSystem<S_SheetAnimation>(System::SheetAnimation);
 	m_systemManager.AddSystem<S_Sound>(System::Sound);
 	m_systemManager.AddSystem<S_Renderer>(System::Renderer);
 
-	m_systemManager.GetSystem<S_Collision>(System::Collision)->
-		SetMap(&m_gameMap);
-	m_systemManager.GetSystem<S_Movement>(System::Movement)->
-		SetMap(&m_gameMap);
-	m_systemManager.GetSystem<S_Sound>(System::Sound)->
-		SetUp(&m_audioManager, &m_soundManager);
+	m_systemManager.GetSystem<S_Collision>(System::Collision)->SetMap(&m_gameMap);
+	m_systemManager.GetSystem<S_Movement>(System::Movement)->SetMap(&m_gameMap);
+	m_systemManager.GetSystem<S_Sound>(System::Sound)->SetUp(&m_audioManager, &m_soundManager);
 }
 
 void Game::SetUpStates() {
 	m_stateManager->AddDependent(m_context.m_eventManager);
 	m_stateManager->AddDependent(&m_guiManager);
 	m_stateManager->AddDependent(&m_soundManager);
+	m_stateManager->AddDependent(m_particles.get());
 	m_stateManager->RegisterState<State_Intro>(StateType::Intro);
-	m_stateManager->RegisterState<State_MainMenu>(
-		StateType::MainMenu);
+	m_stateManager->RegisterState<State_MainMenu>(StateType::MainMenu);
 	m_stateManager->RegisterState<State_Game>(StateType::Game);
 }
