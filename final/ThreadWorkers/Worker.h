@@ -15,6 +15,7 @@ public:
 	bool IsDone() { sf::Lock lock(m_mutex); return m_done; }
 	bool HasStarted() { sf::Lock lock(m_mutex); return m_started; }
 	void ResetWorker() { sf::Lock lock(m_mutex); m_done = false; m_started = false; }
+
 protected:
 	void Done() { m_done = true; }
 	virtual void Work() = 0;

@@ -1,9 +1,7 @@
 #pragma once
+#include <SFML/Graphics.hpp>
 #include "../StateSystem/BaseState.h"
 #include "../EventSystem/EventManager.h"
-#include "../ThreadWorkers/FileLoader.h"
-
-using LoaderContainer = std::vector<FileLoader*>;
 
 class State_MainMenu : public BaseState {
 public:
@@ -14,6 +12,10 @@ public:
 	void OnDestroy();
 
 	void Activate();
+	void Deactivate();
+
+	void Update(const sf::Time& l_time);
+	void Draw();
 
 	void Play(EventDetails* l_details);
 	void Quit(EventDetails* l_details);
