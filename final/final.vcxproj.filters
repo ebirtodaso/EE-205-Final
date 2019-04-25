@@ -599,4 +599,22 @@
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="sfml-window-d-2.dll" />
+    <None Include="sfml-audio-2.dll" />
+    <None Include="sfml-audio-d-2.dll" />
+    <None Include="sfml-graphics-2.dll" />
+    <None Include="sfml-graphics-d-2.dll" />
+    <None Include="sfml-network-2.dll" />
+    <None Include="sfml-network-d-2.dll" />
+    <None Include="sfml-system-2.dll" />
+    <None Include="sfml-system-d-2.dll" />
+    <None Include="sfml-window-2.dll" />
+    <None Include="textures.cfg" />
+    <None Include="openal32.dll" />
+    <None Include="keys.cfg" />
+    <None Include="final.aps" />
+    <None Include="audio.cfg" />
+    <None Include="fonts.cfg" />
+  </ItemGroup>
 </Project>

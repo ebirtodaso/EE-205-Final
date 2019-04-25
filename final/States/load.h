@@ -1,7 +1,7 @@
 #pragma once
-#include "../../StateSystem/BaseState.h"
-#include "../../EventSystem/EventManager.h"
-#include "../../ThreadWorkers/FileLoader.h"
+#include "../StateSystem/BaseState.h"
+#include "../EventSystem/EventManager.h"
+#include "../ThreadWorkers/FileLoader.h"
 
 using LoaderContainer = std::vector<FileLoader*>;
 
