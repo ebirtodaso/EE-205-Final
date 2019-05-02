@@ -1,0 +1,25 @@
+﻿  AnimationComponent.cpp
+  AttributeComponent.cpp
+  EditorState.cpp
+  Entity.cpp
+  Game.cpp
+  GameState.cpp
+  GraphicsSettings.cpp
+  Gui.cpp
+  HitboxComponent.cpp
+  MainMenuState.cpp
+  MovementComponent.cpp
+  PauseMenu.cpp
+  Player.cpp
+  PlayerGUI.cpp
+  run.cpp
+  SettingsState.cpp
+  State.cpp
+  stdafx.cpp
+  Tile.cpp
+  TileMap.cpp
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 1617 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  adventuresofbard.vcxproj -> F:\ee205\adventuresofbard(VS)\adventuresofbard\Release\adventuresofbard.exe
